@@ -9,5 +9,14 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Data\" />
+    <Folder Include="Identifiers\" />
+    <Folder Include="DataModels\" />
+    <Folder Include="RequestModel\" />
+    <Folder Include="ResponseModel\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\SQL Server\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Policy\" />
   </ItemGroup>
 </Project>
