@@ -15,7 +15,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PolicyApi.Data;
+using PolicyApi.Policy;
 using PolicyApi.Services.SQLServer;
+using PolicyApi.Utilities;
 
 namespace PolicyApi
 {
@@ -63,17 +65,23 @@ namespace PolicyApi
 
                 };
             });
+
+            services.AddScoped<DBInitializer>();
+            services.AddScoped<PolicyManager>();
+            services.AddSingleton<TMCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DBInitializer dBInitializer)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            dBInitializer.Initialize();
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
