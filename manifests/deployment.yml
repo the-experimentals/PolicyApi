@@ -1,0 +1,23 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: policyapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: policyapi
+  template:
+    metadata:
+      labels:
+        app: policyapi
+      annotations:
+        "consul.hashicorp.com/connect-inject": "true"
+        "consul.hashicorp.com/service-name": "policyapi"
+        "consul.hashicorp.com/connect-service-port": "5002"
+    spec:
+      containers:
+        - name: policyapi
+          image: policyapi:v1
+          ports:
+          - containerPort: 5002
