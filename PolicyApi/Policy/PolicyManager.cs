@@ -148,9 +148,9 @@ namespace PolicyApi.Policy
             var tokenDescriptor = new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
             {
                 Subject = claimsIdentity,
-                Issuer = "TaskManagerApi",
-                Audience = "TaskManagerApi",
-                Expires = DateTime.UtcNow.AddMinutes(15),
+                Issuer = _jwtSecretKey.ISSUER,
+                Audience = _jwtSecretKey.AUDIENCE,
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSecretKey.TTL),
                 SigningCredentials = new Token.SigningCredentials(new Token.SymmetricSecurityKey(key), Token.SecurityAlgorithms.HmacSha256Signature)
             };
 
