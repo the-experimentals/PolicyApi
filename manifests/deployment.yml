@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: policyapi 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: policyapi
+  template:
+    metadata:
+      labels:
+        app: policyapi 
+    spec:
+      containers:
+        - name: policyapi 
+          image: tmsolutionregistry.azurecr.io/policyapi
+          ports:
+          - containerPort: 5003
