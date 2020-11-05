@@ -1,7 +1,7 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: policyapi 
+  name: policyapi
 spec:
   replicas: 1
   selector:
@@ -10,10 +10,14 @@ spec:
   template:
     metadata:
       labels:
-        app: policyapi 
+        app: policyapi
+      annotations:
+        "consul.hashicorp.com/connect-inject": "true"
+        "consul.hashicorp.com/service-name": "policyapi"
+        "consul.hashicorp.com/connect-service-port": "5003"
     spec:
       containers:
-        - name: policyapi 
+        - name: policyapi
           image: tmsolutionregistry.azurecr.io/policyapi
           ports:
           - containerPort: 5003

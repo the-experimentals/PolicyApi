@@ -3,8 +3,8 @@ kind: Service
 metadata:
     name: policyapi
 spec:
-    type: LoadBalancer
+    type: ClusterIP
     ports:
-    - port: 5003 
+    - port: 5003
     selector:
         app: policyapi
