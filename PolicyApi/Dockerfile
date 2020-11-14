@@ -1,8 +1,8 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 5003
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.100-buster-slim AS build
 WORKDIR /src
 COPY PolicyApi.csproj /src
 RUN dotnet restore "PolicyApi.csproj"
