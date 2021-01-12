@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0.2-buster-slim AS base
 WORKDIR /app
 EXPOSE 5003
 
