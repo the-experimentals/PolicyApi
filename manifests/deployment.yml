@@ -19,5 +19,19 @@ spec:
       containers:
         - name: policyapi
           image: policyapi:v1
+          env:
+            - name: "ASPNETCORE_URLS"
+              value: "https://[*]:5003"
+            - name: "ASPNETCORE_Kestrel__Certificates__Default__Password"
+              value: "Bibek123@"
+            - name: "ASPNETCORE_Kestrel__Certificates__Default__Path"
+              value: "secret/tmsolution.pfx"
           ports:
           - containerPort: 5003
+          volumeMounts:
+          - mountPath: /app/secret
+            name: tmsolution-secret
+      volumes:
+        - name: tmsolution-secret
+          secret:
+            secretName: tmsolution-generic-secret

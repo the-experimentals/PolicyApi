@@ -33,7 +33,7 @@ namespace PolicyApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://[*]:5003");
+                    webBuilder.UseUrls("https://[*]:5003");
                     webBuilder.UseStartup<Startup>();
                 });
     }
