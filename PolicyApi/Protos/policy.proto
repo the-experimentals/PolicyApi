@@ -1,0 +1,15 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "PolicyApi.Protos";
+
+import "google/protobuf/empty.proto";
+package policy;
+
+service Policy{
+    rpc GetPolicyToken (google.protobuf.Empty) returns (TokenResponse);
+}
+
+
+message TokenResponse{
+    string ACCESS = 1;
+}

@@ -6,6 +6,9 @@
     <UserSecretsId>a3fd17ab-f59f-422d-b6a0-c9c687e3f312</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+        <Protobuf Include="Protos\policy.proto" GrpcServices="Server" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -18,6 +21,8 @@
     <Folder Include="Services\SQL Server\" />
     <Folder Include="Utilities\" />
     <Folder Include="Policy\" />
+    <Folder Include="Services\gRPC\" />
+    <Folder Include="Mappings\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
@@ -32,5 +37,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.35.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
   </ItemGroup>
 </Project>
