@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PolicyApi.Data;
 using PolicyApi.Policy;
+using PolicyApi.Services.gRPC;
 using PolicyApi.Services.SQLServer;
 using PolicyApi.Utilities;
 
@@ -33,6 +35,8 @@ namespace PolicyApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddGrpc();
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
 
             services.AddMemoryCache();
@@ -69,6 +73,7 @@ namespace PolicyApi
             services.AddScoped<DBInitializer>();
             services.AddScoped<PolicyManager>();
             services.AddSingleton<TMCache>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,6 +96,7 @@ namespace PolicyApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<PolicyService>();
                 endpoints.MapControllers();
             });
         }
