@@ -4,7 +4,7 @@ EXPOSE 5003
 RUN apk add icu-libs
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY PolicyApi.csproj /src
 RUN dotnet restore "PolicyApi.csproj"
