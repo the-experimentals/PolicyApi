@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,13 @@ namespace PolicyApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseUrls("https://[*]:5003");
+                    //webBuilder.ConfigureKestrel(opts =>
+                    //{
+                    //    opts.Listen(IPAddress.Any, 5003, listenOptions =>
+                    //    {
+                    //        listenOptions.Protocols = HttpProtocols.Http2;
+                    //    });
+                    //});
                     webBuilder.UseStartup<Startup>();
                 });
     }
