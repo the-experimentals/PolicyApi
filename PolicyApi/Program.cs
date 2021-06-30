@@ -35,7 +35,7 @@ namespace PolicyApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("https://[*]:5003");
+                    
                     //webBuilder.ConfigureKestrel(opts =>
                     //{
                     //    opts.Listen(IPAddress.Any, 5003, listenOptions =>
