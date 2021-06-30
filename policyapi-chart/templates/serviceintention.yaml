@@ -1,0 +1,10 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: policyapi
+spec:
+  destination:
+    name: policyapi
+  sources:
+    - name: tmsolution-gateway
+      action: allow
