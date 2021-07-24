@@ -87,9 +87,11 @@ namespace PolicyApi
 
             app.UseAuthorization();
 
+            app.UseGrpcWeb();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<PolicyService>().RequireHost("6002");
+                endpoints.MapGrpcService<PolicyService>().RequireHost("6002").EnableGrpcWeb();
                 endpoints.MapControllers();
             });
         }

@@ -39,5 +39,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.38.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Grpc.AspNetCore.Web" />
   </ItemGroup>
 </Project>
