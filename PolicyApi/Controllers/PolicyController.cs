@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Net.Mime;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,7 +9,9 @@ using PolicyApi.ResponseModel;
 namespace PolicyApi.Controllers
 {
     [Authorize]
-    [Route("api/policy")]
+    [Route("policy")]
+    [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
     public class PolicyController : Controller
     {
         private readonly PolicyManager _policyManager;
@@ -33,6 +32,13 @@ namespace PolicyApi.Controllers
             token.ACCESS = _policyManager.GenerateJwtToken(userIdentity);
 
             return Ok(JsonConvert.SerializeObject(token));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("testing policy api");
         }
     }
 }
