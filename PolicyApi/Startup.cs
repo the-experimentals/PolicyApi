@@ -96,7 +96,7 @@ namespace PolicyApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<PolicyService>();
+                endpoints.MapGrpcService<PolicyService>().RequireHost("6002");
                 endpoints.MapControllers();
             });
         }

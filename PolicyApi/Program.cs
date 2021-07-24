@@ -35,14 +35,18 @@ namespace PolicyApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    
-                    //webBuilder.ConfigureKestrel(opts =>
-                    //{
-                    //    opts.Listen(IPAddress.Any, 5003, listenOptions =>
-                    //    {
-                    //        listenOptions.Protocols = HttpProtocols.Http2;
-                    //    });
-                    //});
+
+                    webBuilder.ConfigureKestrel(opts =>
+                    {
+                        opts.ListenAnyIP(5003, listenOptions =>
+                        {
+                            listenOptions.Protocols = HttpProtocols.Http1;
+                        });
+                        opts.ListenAnyIP(6002, listenOptions =>
+                        {
+                            listenOptions.Protocols = HttpProtocols.Http2;
+                        });
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

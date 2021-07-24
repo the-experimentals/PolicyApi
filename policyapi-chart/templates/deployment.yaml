@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "policyapi-chart.selectorLabels" . | nindent 6 }}
+      app: {{ include "policyapi-chart.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "policyapi-chart.selectorLabels" . | nindent 8 }}
+        app: {{ include "policyapi-chart.fullname" . }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
