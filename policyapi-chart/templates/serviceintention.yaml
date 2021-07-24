@@ -8,3 +8,5 @@ spec:
   sources:
     - name: tmsolution-gateway
       action: allow
+    - name: authapi
+      action: allow

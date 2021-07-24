@@ -25,7 +25,8 @@ serviceAccount:
 
 podAnnotations:
   "consul.hashicorp.com/connect-inject": "true"
-  "consul.hashicorp.com/service-name": "policyapi"
+  'consul.hashicorp.com/transparent-proxy': 'true'
+  "consul.hashicorp.com/connect-service-port": "5003"
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -42,8 +43,12 @@ service:
   type: ClusterIP
   Ports:
     http:
-      port: 8080
-      targetPort: 8080
+      port: 5003
+      targetPort: 5003
+      protocol: TCP
+    grpc:
+      port: 6002
+      targetPort: 6002
       protocol: TCP
 
 resources:
