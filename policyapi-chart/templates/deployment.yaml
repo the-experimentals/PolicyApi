@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "policyapi-chart.selectorLabels" . | nindent 6 }}
+      app: {{ include "accountapi-chart.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,6 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "policyapi-chart.selectorLabels" . | nindent 8 }}
+        app: {{ include "accountapi-chart.fullname" . }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -33,18 +35,16 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "ASPNETCORE_URLS"
+              value: "http://[*]:5003"
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 5003
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            - name: grpc
+              containerPort: 6002
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
