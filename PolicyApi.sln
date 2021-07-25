@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicyApi", "PolicyApi\PolicyApi.csproj", "{F5A50503-F113-445B-B172-B9CACDA333A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicyApiTest", "PolicyApiTest\PolicyApiTest.csproj", "{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{F5A50503-F113-445B-B172-B9CACDA333A1}.Release|x64.Build.0 = Release|Any CPU
 		{F5A50503-F113-445B-B172-B9CACDA333A1}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5A50503-F113-445B-B172-B9CACDA333A1}.Release|x86.Build.0 = Release|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Release|x64.Build.0 = Release|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{E1F8EEA2-B28F-4B07-A317-34ECB44E89FE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
