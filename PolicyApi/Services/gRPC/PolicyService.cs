@@ -7,12 +7,12 @@ using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using PolicyApi.Policy;
 using PolicyApi.Protos;
-using static PolicyApi.Protos.Policy;
+using static PolicyApi.Protos.PolicyApi;
 
 namespace PolicyApi.Services.gRPC
 {
     [Authorize]
-    public class PolicyService : PolicyBase
+    public class PolicyService : PolicyApiBase
     {
         private readonly PolicyManager _policyManager;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace PolicyApi.Services.gRPC
         }
 
         public override Task<TokenResponse> GetPolicyToken(Empty request, ServerCallContext context)
-        {            
+        {
             ClaimsIdentity userIdentity = context.GetHttpContext().User.Identity as ClaimsIdentity;
             string profileID = userIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 

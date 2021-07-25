@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-        <Protobuf Include="Protos\policy.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
     <Folder Include="Identifiers\" />
@@ -43,5 +39,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Grpc.AspNetCore.Web" />
+    <None Remove="Protos\policyapi.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\policyapi.proto" GrpcServices="Server">
+      <OutputDir>obj\Debug\net5.0\</OutputDir>
+      <Link>Protos\policyapi.proto</Link>
+    </Protobuf>
   </ItemGroup>
 </Project>

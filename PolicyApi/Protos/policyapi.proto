@@ -5,7 +5,7 @@ option csharp_namespace = "PolicyApi.Protos";
 import "google/protobuf/empty.proto";
 package policy;
 
-service Policy{
+service PolicyApi{
     rpc GetPolicyToken (google.protobuf.Empty) returns (TokenResponse);
 }
 

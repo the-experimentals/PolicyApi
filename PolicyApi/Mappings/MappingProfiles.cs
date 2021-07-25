@@ -9,7 +9,7 @@ namespace PolicyApi.Mappings
         public MappingProfiles()
         {
             CreateMap<TokenResponse, Protos.TokenResponse>()
-                .ForMember(dest => dest.ACCESS, opt => opt.MapFrom(src => src.ACCESS));                
+                .ForMember(dest => dest.ACCESS, opt => opt.MapFrom(src => src.ACCESS));
         }
     }
 }

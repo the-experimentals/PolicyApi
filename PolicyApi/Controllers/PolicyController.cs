@@ -28,8 +28,11 @@ namespace PolicyApi.Controllers
             string profileID = userIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             userIdentity.AddClaims(_policyManager.GetProfileRoleClaims(profileID));
-            TokenResponse token = new TokenResponse();
-            token.ACCESS = _policyManager.GenerateJwtToken(userIdentity);
+            TokenResponse token = new()
+            {
+                ACCESS = _policyManager.GenerateJwtToken(userIdentity)
+            };
+            
 
             return Ok(JsonConvert.SerializeObject(token));
         }
