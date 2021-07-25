@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using PolicyApi.Data;
 using PolicyApi.DataModels;
 using PolicyApi.Services.SQLServer;
@@ -13,7 +14,7 @@ using Token = Microsoft.IdentityModel.Tokens;
 
 namespace PolicyApi.Policy
 {
-    public class PolicyManager
+    public class PolicyManager : IPolicyManager
     {
         private readonly PolicyStore _store;
         private readonly JwtSecretKey _jwtSecretKey;
@@ -33,7 +34,7 @@ namespace PolicyApi.Policy
                            join roles in _store.ROLES
                            on profileRole.ROLE_ID equals roles.ID
                            where roles.CODE == role.CODE select profileRole).Any();
-            ProfileRoles newProfileRole = new ProfileRoles();
+            ProfileRoles newProfileRole = new();
 
             if (!hasRole)
             {
@@ -82,11 +83,6 @@ namespace PolicyApi.Policy
             }
         }
 
-        public List<Claim> GetProfileClaims(string profileID)
-        {
-            return null;
-        }
-
         public List<Claim> GetProfileRoleClaims(string profileID)
         {
 
@@ -94,7 +90,7 @@ namespace PolicyApi.Policy
 
             if(claims == null || claims.Count() == 0)
             {
-                claims = new List<Claim>();
+                claims = new();
 
                 var roles = (from pr in _store.PROFILE_ROLES
                              join role in _store.ROLES
@@ -110,7 +106,7 @@ namespace PolicyApi.Policy
 
                 foreach (var role in roles.Select(x => x.dataRole))
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role.CODE));
+                    claims.Add(new(ClaimTypes.Role, role.CODE));
                 }
 
                 claims.AddRange(GetProfileRolePermissions(roles.Select(x => x.dataProfileRoleIDs).ToList()));
@@ -124,7 +120,7 @@ namespace PolicyApi.Policy
 
         private List<Claim> GetProfileRolePermissions(List<string> roleIDs)
         {
-            List<Claim> claims = new List<Claim>();
+            List<Claim> claims = new();
 
             var permissions = (from profileRolePermission in _store.PROFILE_ROLE_PERMISSIONS
                                join permission in _store.PERMISSIONS
@@ -134,7 +130,7 @@ namespace PolicyApi.Policy
 
             foreach (var permission in permissions)
             {
-                claims.Add(new Claim("Permission", permission.CODE));
+                claims.Add(new("Permission", permission.CODE));
             }
 
             return claims;
@@ -145,7 +141,7 @@ namespace PolicyApi.Policy
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var key = Encoding.ASCII.GetBytes(_jwtSecretKey.SECRET);
-            var tokenDescriptor = new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = claimsIdentity,
                 Issuer = _jwtSecretKey.ISSUER,
