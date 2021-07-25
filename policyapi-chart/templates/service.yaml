@@ -15,4 +15,4 @@ spec:
 {{- end }}
   selector:
     {{- include "policyapi-chart.selectorLabels" . | nindent 4 }}
-    app: {{ include "accountapi-chart.fullname" . }}
+    app: {{ include "policyapi-chart.fullname" . }}
