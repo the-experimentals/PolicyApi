@@ -13,14 +13,26 @@ namespace PolicyApi.Services.gRPC.Services
     [Authorize]
     public class PolicyApiService : PolicyApiBase
     {
-        private readonly PolicyManager _policyManager;
+        private readonly IPolicyManager _policyManager;
         private readonly IMapper _mapper;
 
-        public PolicyApiService(PolicyManager policyManager, IMapper mapper)
+        public PolicyApiService(IPolicyManager policyManager, IMapper mapper)
         {
             _policyManager = policyManager;
             _mapper = mapper;
         }
+
+        //public override Task<TokenResponse> GetPolicyToken(Empty request, ServerCallContext context)
+        //{
+        //    ClaimsIdentity userIdentity = context.GetHttpContext().User.Identity as ClaimsIdentity;
+        //    string profileID = userIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        //    userIdentity.AddClaims(_policyManager.GetProfileRoleClaims(profileID));
+        //    TokenResponse token = new();
+        //    token.ACCESS = _policyManager.GenerateJwtToken(userIdentity);
+
+        //    return Task.FromResult(_mapper.Map<TokenResponse>(token));
+        //}
 
         public override Task<TokenResponse> GetPolicyToken(Empty request, ServerCallContext context)
         {
@@ -28,7 +40,7 @@ namespace PolicyApi.Services.gRPC.Services
             string profileID = userIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             userIdentity.AddClaims(_policyManager.GetProfileRoleClaims(profileID));
-            TokenResponse token = new TokenResponse();
+            TokenResponse token = new();
             token.ACCESS = _policyManager.GenerateJwtToken(userIdentity);
 
             return Task.FromResult(_mapper.Map<TokenResponse>(token));
