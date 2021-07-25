@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using PolicyApi.Data;
 using PolicyApi.Policy;
 using PolicyApi.Services.gRPC.Services;
 using PolicyApi.Services.SQLServer;
+using PolicyApi.Utilities;
 
 namespace PolicyApi
 {
@@ -30,6 +32,9 @@ namespace PolicyApi
             services.AddDbContext<PolicyStore>(options => options.UseSqlServer(Configuration.GetConnectionString("PolicyStoreConnectionString")));
 
             services.AddSingleton<IPolicyManager, PolicyManager>();
+            services.AddScoped<DBInitializer>();
+            services.AddSingleton<TMCache>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
