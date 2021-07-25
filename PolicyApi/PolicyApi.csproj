@@ -6,8 +6,16 @@
 
   <ItemGroup>
     <None Remove="Controllers\" />
+    <None Remove="DataModels\" />
+    <None Remove="RequestModels\" />
+    <None Remove="ResponseModels\" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="DataModels\" />
+    <Folder Include="RequestModels\" />
+    <Folder Include="ResponseModels\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
