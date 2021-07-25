@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using PolicyApi.Policy;
 using PolicyApi.Protos;
 using static PolicyApi.Protos.PolicyApi;
 
 namespace PolicyApi.Services.gRPC.Services
 {
+    [Authorize]
     public class PolicyApiService : PolicyApiBase
     {
         private readonly PolicyManager _policyManager;

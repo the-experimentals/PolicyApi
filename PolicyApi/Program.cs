@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,15 +28,15 @@ namespace PolicyApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseKestrel(options =>
+                    webBuilder.ConfigureKestrel(options =>
                     {
                         options.ListenAnyIP(5003, config =>
                         {
-                            config.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
+                            config.Protocols = HttpProtocols.Http1;
                         });
                         options.ListenAnyIP(6002, config =>
                         {
-                            config.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+                            config.Protocols = HttpProtocols.Http2;
                         });
                     });
                     webBuilder.UseStartup<Startup>();

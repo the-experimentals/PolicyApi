@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using PolicyApi.Data;
 using PolicyApi.Policy;
 using PolicyApi.Services.gRPC.Services;
@@ -36,6 +39,33 @@ namespace PolicyApi
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
             services.AddDbContext<PolicyStore>(options => options.UseSqlServer(Configuration.GetConnectionString("PolicyStoreConnectionString")));
 
+            // configure strongly typed settings objects
+            var JwtSecretKeySection = Configuration.GetSection("JwtSecretKey");
+            services.Configure<JwtSecretKey>(JwtSecretKeySection);
+
+            // configure jwt authentication.
+            var jwtSettings = JwtSecretKeySection.Get<JwtSecretKey>();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.SECRET);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+
+                };
+            });
+
             services.AddScoped<IPolicyManager, PolicyManager>();
             services.AddScoped<DBInitializer>();
             services.AddSingleton<TMCache>();
@@ -53,6 +83,8 @@ namespace PolicyApi
             dBInitializer.Initialize();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
