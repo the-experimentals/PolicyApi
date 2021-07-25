@@ -11,11 +11,11 @@ namespace PolicyApi.Data
     public class DBInitializer
     {
         private readonly PolicyStore _store;
-        private readonly PolicyManager _policyManager;
+        private readonly IPolicyManager _policyManager;
         BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
         public const string ADMIN_GUID = "af8f3217-02b2-4cc2-b536-74f99def2a39";
 
-        public DBInitializer(PolicyStore store, PolicyManager policyManager)
+        public DBInitializer(PolicyStore store, IPolicyManager policyManager)
         {
             _store = store;
             _policyManager = policyManager;

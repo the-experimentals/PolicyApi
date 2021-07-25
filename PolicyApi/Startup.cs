@@ -25,13 +25,18 @@ namespace PolicyApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddGrpc();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
 
             services.AddMemoryCache();
             services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
             services.AddDbContext<PolicyStore>(options => options.UseSqlServer(Configuration.GetConnectionString("PolicyStoreConnectionString")));
 
-            services.AddSingleton<IPolicyManager, PolicyManager>();
+            services.AddScoped<IPolicyManager, PolicyManager>();
             services.AddScoped<DBInitializer>();
             services.AddSingleton<TMCache>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
