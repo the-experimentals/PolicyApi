@@ -37,13 +37,13 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: "ASPNETCORE_URLS"
-              value: "http://[*]:5003"
+              value: "http://[*]:5002"
           ports:
             - name: http
-              containerPort: 5003
+              containerPort: 5002
               protocol: TCP
             - name: grpc
-              containerPort: 6002
+              containerPort: 6001
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

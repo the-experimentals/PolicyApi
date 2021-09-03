@@ -30,11 +30,11 @@ namespace PolicyApi
                 {
                     webBuilder.ConfigureKestrel(options =>
                     {
-                        options.ListenAnyIP(5003, config =>
+                        options.ListenAnyIP(5002, config =>
                         {
                             config.Protocols = HttpProtocols.Http1;
                         });
-                        options.ListenAnyIP(6002, config =>
+                        options.ListenAnyIP(6001, config =>
                         {
                             config.Protocols = HttpProtocols.Http2;
                         });
