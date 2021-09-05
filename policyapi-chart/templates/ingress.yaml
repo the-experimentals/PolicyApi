@@ -39,7 +39,7 @@ spec:
               service:
                 name: policyapi
                 port:
-                  number: 5003
+                  number: 5002
               # serviceName: {{ $fullName }}
               # servicePort: {{ $svcPort }}
           # {{- end }}

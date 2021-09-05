@@ -1,27 +1,19 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PolicyApi.Services.SQLServer;
+using PolicyApi.StartupTasks;
 
 namespace PolicyApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var context = services.GetService<PolicyStore>();
-
-                context.Database.Migrate();
-            }
-
-            host.Run();
+            await CreateHostBuilder(args).Build().RunWithTasksAsync();                        
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

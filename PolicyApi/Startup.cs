@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PolicyApi.Data;
 using PolicyApi.Policy;
 using PolicyApi.Services.gRPC.Services;
 using PolicyApi.Services.SQLServer;
+using PolicyApi.StartupTasks;
+using PolicyApi.StartupTasks.Tasks;
 using PolicyApi.Utilities;
 
 namespace PolicyApi
@@ -70,6 +73,9 @@ namespace PolicyApi
             services.AddScoped<DBInitializer>();
             services.AddSingleton<TMCache>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddStartupTask<DBMigrator>();
+            services.AddStartupTask<WarmupServices>().TryAddSingleton(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
