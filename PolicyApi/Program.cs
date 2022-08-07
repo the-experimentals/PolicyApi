@@ -13,7 +13,7 @@ namespace PolicyApi
     {
         public static async Task Main(string[] args)
         {
-            await CreateHostBuilder(args).Build().RunWithTasksAsync();                        
+            await CreateHostBuilder(args).Build().RunWithTasksAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,11 +22,11 @@ namespace PolicyApi
                 {
                     webBuilder.ConfigureKestrel(options =>
                     {
-                        options.ListenAnyIP(5002, config =>
+                        options.ListenAnyIP(8080, config =>
                         {
                             config.Protocols = HttpProtocols.Http1;
                         });
-                        options.ListenAnyIP(6001, config =>
+                        options.ListenAnyIP(6900, config =>
                         {
                             config.Protocols = HttpProtocols.Http2;
                         });

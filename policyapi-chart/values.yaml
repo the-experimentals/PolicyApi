@@ -25,10 +25,8 @@ serviceAccount:
 
 podAnnotations:
   "consul.hashicorp.com/connect-inject": "true"
-  'consul.hashicorp.com/transparent-proxy': 'true'
-  "consul.hashicorp.com/connect-service-port": "5002"
-  "consul.hashicorp.com/transparent-proxy-exclude-inbound-ports": "5002"
-  "consul.hashicorp.com/transparent-proxy-exclude-outbound-cidrs": "10.96.0.1/32"
+  "consul.hashicorp.com/service-name": "policyapi"
+  # "consul.hashicorp.com/transparent-proxy-exclude-outbound-cidrs": "10.96.0.1/32"
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -45,16 +43,16 @@ service:
   type: ClusterIP
   Ports:
     http:
-      port: 5002
-      targetPort: 5002
+      port: 8080
+      targetPort: 8080
       protocol: TCP
     grpc:
-      port: 6001
-      targetPort: 6001
+      port: 6900
+      targetPort: 6900
       protocol: TCP
 
 ingress:
-  enabled: true
+  enabled: false
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
