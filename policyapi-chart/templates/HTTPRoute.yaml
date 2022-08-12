@@ -1,0 +1,17 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: HTTPRoute
+metadata:
+  name: policyapi
+spec:
+  parentRefs:
+  - name: tmsolution-gateway
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /policy
+    backendRefs:
+    - kind: Service
+      name: policyapi
+      port: 8080
+      weight: 1000
