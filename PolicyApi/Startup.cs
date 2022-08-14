@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,26 +50,40 @@ namespace PolicyApi
 
             // configure jwt authentication.
             var jwtSettings = JwtSecretKeySection.Get<JwtSecretKey>();
-            var key = Encoding.ASCII.GetBytes(jwtSettings.SECRET);
+
+            services.AddSingleton<RsaSecurityKey>(provider =>
+            {
+                RSA rsa = RSA.Create();
+                rsa.ImportFromPem(jwtSettings.PUBLIC_KEY.ToCharArray());
+
+                return new RsaSecurityKey(rsa);
+            });
 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                SecurityKey rsa = services.BuildServiceProvider().GetRequiredService<RsaSecurityKey>();
 
+                options.IncludeErrorDetails = true;
+
+                options.TokenValidationParameters = new()
+                {
+                    IssuerSigningKey = rsa,
+                    ValidAudience = "TMSolution",
+                    ValidIssuer = "TMSolution",
+                    RequireSignedTokens = true,
+                    RequireExpirationTime = true, // <- JWTs are required to have "exp" property set
+                    ValidateLifetime = true, // <- the "exp" will be validated
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
                 };
             });
+
+
 
             services.AddScoped<IPolicyManager, PolicyManager>();
             services.AddScoped<DBInitializer>();

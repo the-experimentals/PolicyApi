@@ -22,18 +22,6 @@ namespace PolicyApi.Services.gRPC.Services
             _mapper = mapper;
         }
 
-        //public override Task<TokenResponse> GetPolicyToken(Empty request, ServerCallContext context)
-        //{
-        //    ClaimsIdentity userIdentity = context.GetHttpContext().User.Identity as ClaimsIdentity;
-        //    string profileID = userIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-        //    userIdentity.AddClaims(_policyManager.GetProfileRoleClaims(profileID));
-        //    TokenResponse token = new();
-        //    token.ACCESS = _policyManager.GenerateJwtToken(userIdentity);
-
-        //    return Task.FromResult(_mapper.Map<TokenResponse>(token));
-        //}
-
         public override Task<TokenResponse> GetPolicyToken(Empty request, ServerCallContext context)
         {
             ClaimsIdentity userIdentity = context.GetHttpContext().User.Identity as ClaimsIdentity;

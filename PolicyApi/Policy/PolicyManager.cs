@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PolicyApi.Data;
@@ -31,16 +33,17 @@ namespace PolicyApi.Policy
         {
             // check if role for this profile already exist
             bool hasRole = (from profileRole in _store.PROFILE_ROLES
-                           join roles in _store.ROLES
-                           on profileRole.ROLE_ID equals roles.ID
-                           where roles.CODE == role.CODE select profileRole).Any();
+                            join roles in _store.ROLES
+                            on profileRole.ROLE_ID equals roles.ID
+                            where roles.CODE == role.CODE
+                            select profileRole).Any();
             ProfileRoles newProfileRole = new();
 
             if (!hasRole)
             {
                 Roles storedRole = _store.ROLES.Where(r => r.CODE.Equals(role.CODE)).FirstOrDefault();
 
-                if(storedRole != null)
+                if (storedRole != null)
                 {
                     newProfileRole.ID = Guid.NewGuid().ToString();
                     newProfileRole.PROFILE_ID = profileID;
@@ -49,11 +52,11 @@ namespace PolicyApi.Policy
                     _store.PROFILE_ROLES.Add(newProfileRole);
                     _store.SaveChanges();
                 }
-                
+
             }
 
             return newProfileRole.ID;
-            
+
         }
 
         /// <summary>
@@ -71,7 +74,7 @@ namespace PolicyApi.Policy
             {
                 bool hasPermission = myPermissions.Any(x => x.PERMISSION_ID.Equals(permission.ID));
                 ProfileRolePermissions profileRolePermissions = new ProfileRolePermissions();
-                if(!hasPermission)
+                if (!hasPermission)
                 {
                     profileRolePermissions.ID = Guid.NewGuid().ToString();
                     profileRolePermissions.PERMISSION_ID = permission.ID;
@@ -88,7 +91,7 @@ namespace PolicyApi.Policy
 
             List<Claim> claims = _cache.Get<List<Claim>>(CLAIMS_CACHE_KEY + profileID);
 
-            if(claims == null || claims.Count() == 0)
+            if (claims == null || claims.Count() == 0)
             {
                 claims = new();
 
@@ -113,7 +116,7 @@ namespace PolicyApi.Policy
 
                 _cache.Add<List<Claim>>(CLAIMS_CACHE_KEY + profileID, claims);
             }
-            
+
 
             return claims;
         }
@@ -138,23 +141,36 @@ namespace PolicyApi.Policy
 
         public string GenerateJwtToken(ClaimsIdentity claimsIdentity)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
 
-            var key = Encoding.ASCII.GetBytes(_jwtSecretKey.SECRET);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            using RSA rsa = RSA.Create();
+
+            rsa.ImportFromPem(_jwtSecretKey.PRIVATE_KEY.ToCharArray());
+
+            SigningCredentials credentials = new(
+                key: new RsaSecurityKey(rsa),
+                algorithm: SecurityAlgorithms.RsaSha256
+            )
+            {
+                CryptoProviderFactory = new CryptoProviderFactory { CacheSignatureProviders = false }
+            };
+
+            DateTime jwtDate = DateTime.UtcNow;
+
+            SecurityTokenDescriptor securityToken = new()
             {
                 Subject = claimsIdentity,
                 Issuer = _jwtSecretKey.ISSUER,
                 Audience = _jwtSecretKey.AUDIENCE,
-                Expires = DateTime.UtcNow.AddMinutes(_jwtSecretKey.TTL),
-                SigningCredentials = new Token.SigningCredentials(new Token.SymmetricSecurityKey(key), Token.SecurityAlgorithms.HmacSha256Signature)
+                NotBefore = jwtDate,
+                Expires = jwtDate.AddMinutes(_jwtSecretKey.TTL),
+                SigningCredentials = credentials
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var token = new JwtSecurityTokenHandler().CreateToken(securityToken);
 
-            return tokenHandler.WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        
+
     }
 }
