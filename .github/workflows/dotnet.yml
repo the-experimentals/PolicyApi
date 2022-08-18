@@ -1,4 +1,4 @@
-name: .NET
+name: Poilcy API
 
 on:
   push:
