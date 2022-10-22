@@ -4,7 +4,7 @@
     <img src="https://github.com/TMExperimentals/PolicyApi/actions/workflows/dotnet.yml/badge.svg">
   </a>
   <h2>Tech stack</h2>
-    https://github.com/TMExperimentals/PolicyApi/blob/readme/uploading-images/.github/images/csharpnet.png
+    <img src="https://github.com/TMExperimentals/PolicyApi/blob/readme/main/.github/images/csharpnet.png">
     <img src="https://github.com/TMExperimentals/PolicyApi/blob/main/.github/images/csharpnet.png">
     <img src="https://github.com/TMExperimentals/PolicyApi/blob/main/.github/images/swagger.png">
     <img src="https://github.com/TMExperimentals/PolicyApi/blob/main/.github/images/sql.png">
