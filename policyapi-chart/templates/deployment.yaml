@@ -38,6 +38,8 @@ spec:
           env:
             - name: "ASPNETCORE_URLS"
               value: "http://[*]:8080"
+            - name: "ConnectionStrings__PolicyStoreConnectionString"
+              value: "Server=tmsolution-database,1433;Initial Catalog=tmsolutiondb;User ID=sa;Password=Bibek123@;TrustServerCertificate=False;Connection Timeout=30;"
             - name: "JwtSecretKey__PRIVATE_KEY"
               valueFrom:
                 secretKeyRef:
