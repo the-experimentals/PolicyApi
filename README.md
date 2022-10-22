@@ -11,3 +11,7 @@
     <img src="https://github.com/itsbibeksaini/PolicyApi/blob/main/.github/images/grpc.png">
     <img src="https://github.com/itsbibeksaini/PolicyApi/blob/main/.github/images/docker.png">
 </div>
+
+Policy API manages roles and permission of identity being logged into system.
+
+## Installation
