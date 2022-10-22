@@ -23,3 +23,20 @@ jobs:
       DOCKERFILE: "PolicyApi/Dockerfile"
       IMAGE_NAME: "policyapi"
       PROJECT_NAME: PolicyApi
+  
+  push:
+    uses: itsbibeksaini/github-workflows/.github/workflows/docker-push-image.yml@main
+    needs: image
+    with:
+      IMAGE_NAME: "policyapi"
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+  
+  deploy:
+    uses: itsbibeksaini/github-workflows/.github/workflows/helm-deploy.yml@main
+    needs: push
+    with:
+      IMAGE_NAME: "policyapi"
+      HELM_CHARTS: "./policyapi-chart"
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
