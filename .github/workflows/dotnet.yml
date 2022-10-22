@@ -18,7 +18,6 @@ jobs:
   
   image:
     uses: itsbibeksaini/github-workflows/.github/workflows/docker-build.yml@main
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
     needs: build
     with:
       DOCKERFILE: "PolicyApi/Dockerfile"
