@@ -2,7 +2,7 @@ name: Poilcy API
 
 on:
   push:
-    branches: [ "master" ]
+    branches: new-workflow
   pull_request:
     branches: [ "master" ]
 
