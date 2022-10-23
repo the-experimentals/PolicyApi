@@ -3,24 +3,24 @@ name: PolicyApi
 trigger:
 - main
 
-resources:
-  repositories:
-    - repository: templates
-      type: github
-      name: itsbibeksaini/pipeline-templates
-      endpoint: github.com_itsbibeksaini
+# resources:
+#   repositories:
+#     - repository: templates
+#       type: github
+#       name: itsbibeksaini/pipeline-templates
+#       endpoint: github.com_itsbibeksaini
 
 pr: none
 
 pool:
   vmImage: ubuntu-latest
 
-variables:  
-  imageRepository: 'policyapi'
-  helmChart: './policyapi-chart'  
-  valueFile: './policyapi-chart/values.yaml'
-  tag: $(Build.SourceBranchName)_$(Build.SourceVersion)
-  vmImageName: ubuntu-latest
+# variables:  
+#   imageRepository: 'policyapi'
+#   helmChart: './policyapi-chart'  
+#   valueFile: './policyapi-chart/values.yaml'
+#   tag: $(Build.SourceBranchName)_$(Build.SourceVersion)
+#   vmImageName: ubuntu-latest
 
 stages:
 - stage: BuildImage
@@ -41,7 +41,7 @@ stages:
       - task: DotNetCoreCLI@2
         inputs:
           command: 'build'
-          projects: ./IdentityApi.sln
+          projects: ./PolicyApi.sln
     
 # - stage: Deploy
 #   displayName: Helm Deploy
