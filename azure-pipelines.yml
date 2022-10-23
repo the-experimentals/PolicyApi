@@ -54,12 +54,8 @@ stages:
         displayName: Publish .NET Application.
         inputs:
           command: publish
-          arguments: --output $(Build.ArtifactStagingDirectory)/app/publish      
       - script: |
-          ls
-          echo "###########"
-          cd app/publish/PolicyApi/
-          ls
+          ls          
       - task: Docker@2
         displayName: Build docker image.
         inputs:
