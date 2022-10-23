@@ -54,6 +54,7 @@ stages:
         displayName: Publish .NET Application.
         inputs:
           command: publish
+          projects: 'PolicyApi/PolicyApi.csproj'
           arguments: -c release
       - script: |
           ls          
