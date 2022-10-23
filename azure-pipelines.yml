@@ -12,6 +12,9 @@ resources:
 
 pr: none
 
+pool:
+  vmImage: ubuntu-latest
+
 variables:  
   imageRepository: 'policyapi'
   helmChart: './policyapi-chart'  
@@ -21,27 +24,35 @@ variables:
 
 stages:
 - stage: BuildImage
-  displayName: Build and push docker image
+  displayName: Build and push .NET Application
   jobs:  
   - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
     steps:         
-    - template: build-image.yml@templates
-      parameters:
-        tag: $(tag)
-        imageRepository: $(imageRepository)
-- stage: Deploy
-  displayName: Helm Deploy
-  jobs:
-    - job: Deploy
-      pool:
-       vmImage: $(vmImageName)
-      steps:         
-      - template: helm-deploy.yml@templates
-        parameters:
-          helmChart: $(helmChart)
-          imageRepository: $(imageRepository)
-          valueFile: $(valueFile)
-          tag: $(tag)
+      - task: UseDotNet@2
+        inputs:
+          version: '6.0.x'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'restore'
+          feedsToUse: 'select'
+          feedRestore: "store/feedName"
+          projects: "**/*.csproj"
+          includeNuGetOrg: true
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: ./IdentityApi.sln
+    
+# - stage: Deploy
+#   displayName: Helm Deploy
+#   jobs:
+#     - job: Deploy
+#       pool:
+#        vmImage: $(vmImageName)
+#       steps:         
+#       - template: helm-deploy.yml@templates
+#         parameters:
+#           helmChart: $(helmChart)
+#           imageRepository: $(imageRepository)
+#           valueFile: $(valueFile)
+#           tag: $(tag)
