@@ -45,7 +45,6 @@ stages:
         inputs:
           command: 'build'
           projects: ./PolicyApi.sln
-          arguments: --output /app/build
       - task: DotNetCoreCLI@2
         displayName: Test .NET Application.
         inputs:
@@ -55,7 +54,7 @@ stages:
         displayName: Publish .NET Application.
         inputs:
           command: publish
-          arguments: --output /app/publish
+          arguments: --output $(Build.ArtifactStagingDirectory)
     
 # - stage: Deploy
 #   displayName: Helm Deploy
