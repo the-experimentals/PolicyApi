@@ -1,7 +1,7 @@
 name: PolicyApi
 
 trigger:
-- main
+- new-azure-pipeline
 
 # resources:
 #   repositories:
