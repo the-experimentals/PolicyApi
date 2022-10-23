@@ -18,4 +18,3 @@ jobs:
       DOCKER_FILE: PolicyApi/Dockerfile
     secrets:
       DIGITALOCEAN_ACCESS_TOKEN: ${{secrets.DIGITALOCEAN_ACCESS_TOKEN}}
-      REGISTRY_NAME: ${{secrets.REGISTRY_NAME}}
