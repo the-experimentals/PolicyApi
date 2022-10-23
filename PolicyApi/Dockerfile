@@ -3,7 +3,8 @@ EXPOSE 8080
 
 RUN apk add icu-libs
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
-RUN ls
-COPY app/publish/PolicyApi/ App/
+
+COPY ./app/publish/PolicyApi/ App/
 WORKDIR /App
+
 ENTRYPOINT ["dotnet", "PolicyApi.dll"]
