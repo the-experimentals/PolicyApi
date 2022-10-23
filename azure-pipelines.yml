@@ -61,7 +61,7 @@ stages:
         inputs:
           repository: policyapi
           command: build
-          Dockerfile: PolicyApi/Dockerfile
+          Dockerfile: '**/Dockerfile'
     
 # - stage: Deploy
 #   displayName: Helm Deploy
