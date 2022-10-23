@@ -57,6 +57,9 @@ stages:
           arguments: -c release
       - script: |
           ls          
+          cd PolicyApi/bin
+          echo '###########'
+          ls
       - task: PublishPipelineArtifact@0
         displayName: Store artefact
         inputs:
