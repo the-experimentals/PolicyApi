@@ -35,7 +35,6 @@ stages:
         inputs:
           command: 'restore'
           feedsToUse: 'select'
-          feedRestore: "store/feedName"
           projects: "**/*.csproj"
           includeNuGetOrg: true
       - task: DotNetCoreCLI@2
