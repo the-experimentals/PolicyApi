@@ -58,14 +58,14 @@ stages:
           arguments: -c release
       - script: |
           ls          
-          cd PolicyApi/bin/release
+          cd PolicyApi/bin/release/net6.0
           echo '###########'
           ls
-      - task: PublishPipelineArtifact@0
-        displayName: Store artefact
-        inputs:
-          artifactName: 'PolicyApi'
-          targetPath: 'PolicyApi/bin/release/net6.0/publish/'
+      # - task: PublishPipelineArtifact@0
+      #   displayName: Store artefact
+      #   inputs:
+      #     artifactName: 'PolicyApi'
+      #     targetPath: 'PolicyApi/bin/release/net6.0/publish/'
       # - script: docker build --pull --rm -f "PolicyApi/Dockerfile" -t identityapi:v1 "."
       # - task: Docker@2
       #   displayName: Build docker image.
