@@ -45,11 +45,17 @@ stages:
         inputs:
           command: 'build'
           projects: ./PolicyApi.sln
+          arguments: --output /app/publish
       - task: DotNetCoreCLI@2
         displayName: Test .NET Application.
         inputs:
           command: test
           projects: '**/*Test/*.csproj'
+      - task: DotNetCoreCLI@2
+        displayName: Publish .NET Application.
+        inputs:
+          command: publish
+          arguments: --output /app/publish
     
 # - stage: Deploy
 #   displayName: Helm Deploy
