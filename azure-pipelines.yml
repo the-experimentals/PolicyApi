@@ -56,8 +56,10 @@ stages:
           command: publish
           arguments: --output $(Build.ArtifactStagingDirectory)/app/publish      
       - script: |
-          cd PolicyApi
-          ls    
+          ls
+          echo "###########"
+          cd app/publish/PolicyApi/
+          ls
       - task: Docker@2
         displayName: Build docker image.
         inputs:
