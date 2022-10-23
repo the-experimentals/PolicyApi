@@ -58,7 +58,7 @@ stages:
           arguments: -c release
       - script: |
           ls          
-          cd PolicyApi/bin/release/net6.0
+          cd PolicyApi/bin/release/net6.0/PolicyApi
           echo '###########'
           ls
       # - task: PublishPipelineArtifact@0
