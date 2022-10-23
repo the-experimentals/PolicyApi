@@ -58,7 +58,7 @@ stages:
           arguments: -c release
       - script: |
           ls          
-          cd bin/release/net6.0/publish/
+          cd bin/release
           echo '###########'
           ls
       - task: PublishPipelineArtifact@0
