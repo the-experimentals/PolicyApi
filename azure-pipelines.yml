@@ -56,12 +56,13 @@ stages:
           command: publish
       - script: |
           ls          
-      - task: Docker@2
-        displayName: Build docker image.
-        inputs:
-          repository: policyapi
-          command: build
-          Dockerfile: '**/Dockerfile'
+      - script: docker build --pull --rm -f "**/Dockerfile" -t identityapi:v1 "."
+      # - task: Docker@2
+      #   displayName: Build docker image.
+      #   inputs:
+      #     repository: policyapi
+      #     command: build
+      #     Dockerfile: '**/Dockerfile'
     
 # - stage: Deploy
 #   displayName: Helm Deploy
