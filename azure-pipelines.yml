@@ -24,20 +24,24 @@ pool:
 
 stages:
 - stage: BuildImage
-  displayName: Build and push .NET Application
+  displayName: Build and push .NET Application.
   jobs:  
   - job: Build
+    displayName: Building .NET Application.
     steps:         
       - task: UseDotNet@2
+        displayName: Install .NET SDK.
         inputs:
           version: '6.0.x'
       - task: DotNetCoreCLI@2
+        displayName: Restore nuget packages.
         inputs:
           command: 'restore'
           feedsToUse: 'select'
           projects: "**/*.csproj"
           includeNuGetOrg: true
       - task: DotNetCoreCLI@2
+        displayName: Build .NET Application.
         inputs:
           command: 'build'
           projects: ./PolicyApi.sln
