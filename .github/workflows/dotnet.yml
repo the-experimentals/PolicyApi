@@ -21,6 +21,7 @@ jobs:
 
   deploy:
     uses: itsbibeksaini/github-workflows/.github/workflows/helm-deploy.yml@main
+    needs: build
     with:
       IMAGE_NAME: policyapi
       HELM_CHARTS: ./policyapi-charts
