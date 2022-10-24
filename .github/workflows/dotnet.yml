@@ -18,3 +18,11 @@ jobs:
       DOCKER_FILE: PolicyApi/Dockerfile
     secrets:
       DIGITALOCEAN_ACCESS_TOKEN: ${{secrets.DIGITALOCEAN_ACCESS_TOKEN}}
+
+  deploy:
+    uses: itsbibeksaini/github-workflows/.github/workflows/helm-deploy.yml@main
+    with:
+      IMAGE_NAME: policyapi
+      HELM_CHARTS: ./policyapi-charts
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{secrets.DIGITALOCEAN_ACCESS_TOKEN}}
