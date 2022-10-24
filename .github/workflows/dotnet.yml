@@ -9,7 +9,7 @@ on:
 jobs:
   
   build:
-    uses: itsbibeksaini/github-workflows/.github/workflows/v2/dotnet-build-and-push.yml@main
+    uses: itsbibeksaini/github-workflows/.github/workflows/dotnet-build-and-push.yml@main
     with:
       SOLUTION_FILE: ./PolicyApi.sln
       PROJECT_FILE: ./PolicyApi/PolicyApi.csproj
