@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS base
 EXPOSE 8080
 
 RUN apk add icu-libs
