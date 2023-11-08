@@ -63,7 +63,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.46.0" />
-    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.46.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.59.0" />
     <PackageReference Include="Grpc.Tools" Version="2.46.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
